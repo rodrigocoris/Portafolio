@@ -27,10 +27,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const sidebar = document.querySelector('.sidebar');
 
     menuToggle.addEventListener('click', () => {
-        if (sidebar.style.transform === 'translateX(0px)') {
-            sidebar.style.transform = 'translateX(-250px)';
-        } else {
-            sidebar.style.transform = 'translateX(0px)';
-        }
+        sidebar.classList.toggle('active'); // Alterna la clase 'active' para mostrar/ocultar la barra
     });
 });

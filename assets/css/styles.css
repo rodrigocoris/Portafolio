@@ -5,6 +5,8 @@
     --text-color: #ffffff;
     --accent-color: #64ffda;
     --card-bg: rgba(255, 255, 255, 0.05);
+    --gradient-bg: linear-gradient(135deg, #4a90e2, #64ffda);
+    --shadow-color: rgba(0, 0, 0, 0.2);
 }
 
 * {
@@ -19,6 +21,8 @@ body {
     color: var(--text-color);
     line-height: 1.6;
     font-size: 16px;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
 }
 
 .sidebar {
@@ -27,10 +31,15 @@ body {
     height: 100%;
     background: linear-gradient(180deg, var(--secondary-color), rgba(44, 62, 80, 0.95));
     padding: 20px;
-    transition: transform 0.3s;
-    box-shadow: 2px 0 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, background 0.3s ease; /* Transición suave */
+    box-shadow: 2px 0 20px var(--shadow-color);
     z-index: 1000;
-    overflow-y: auto;
+    overflow-y: auto; /* Habilita el scroll vertical */
+    scrollbar-width: none; /* Oculta la scrollbar en Firefox */
+}
+
+.sidebar::-webkit-scrollbar {
+    display: none; /* Oculta la scrollbar en navegadores basados en WebKit */
 }
 
 .main-content {
@@ -41,6 +50,7 @@ body {
 .profile {
     text-align: center;
     padding: 20px 0;
+    margin-top: 50px; /* Espaciado adicional para evitar cortes con la sección anterior */
 }
 
 .profile h1 {
@@ -75,12 +85,16 @@ body {
     padding: 10px 15px;
     border-radius: 5px;
     transition: all 0.3s ease;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .sidebar ul li a:hover {
-    background: var(--accent-color);
+    background: var(--gradient-bg);
     color: var(--background-color);
-    transform: translateX(5px);
+    transform: translateX(10px);
+    box-shadow: 0 5px 15px var(--shadow-color);
 }
 
 .hero {
@@ -89,9 +103,11 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(135deg, var(--secondary-color), var(--background-color));
+    background: var(--gradient-bg);
     position: relative;
     overflow: hidden;
+    animation: fadeIn 2s ease-in-out;
+    padding-bottom: 50px; /* Añadido para evitar cortes con la siguiente sección */
 }
 
 .hero::before {
@@ -112,18 +128,34 @@ body {
     background: linear-gradient(45deg, var(--accent-color), var(--primary-color));
     -webkit-background-clip: text;
     background-clip: text;
-    -webkit-text-fill-color: transparent;
+    -webkit-text-fill-color: var(--text-color); /* Cambiado a blanco para mayor contraste */
     text-align: center;
+    text-shadow: 2px 2px 5px var(--shadow-color);
+}
+
+.hero p {
+    font-size: 1.2em;
+    color: var(--text-color);
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.8;
+    opacity: 0.9;
 }
 
 .section {
-    margin: 100px 0;
-    padding: 40px;
+    margin: 100px 0; /* Espaciado vertical entre secciones */
+    padding: 60px; /* Aumentado para mayor separación interna */
     background: var(--card-bg);
     border-radius: 15px;
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    overflow: hidden; /* Evita que el contenido se desborde */
+}
+
+.section:last-of-type {
+    margin-bottom: 0; /* Elimina el margen inferior de la última sección */
 }
 
 .section.active {
@@ -141,11 +173,12 @@ body {
     color: var(--background-color);
     font-weight: 600;
     transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(100, 255, 218, 0.2);
 }
 
 .skill-badge:hover {
     transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(100, 255, 218, 0.2);
+    box-shadow: 0 10px 20px var(--shadow-color);
 }
 
 .project-card {
@@ -155,16 +188,57 @@ body {
     margin: 20px 0;
     border: 1px solid rgba(255, 255, 255, 0.1);
     transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
 }
 
 .project-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 10px 30px var(--shadow-color);
+}
+
+.project-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--gradient-bg);
+    opacity: 0.1;
+    z-index: 0;
+    transition: opacity 0.3s ease;
+}
+
+.project-card:hover::before {
+    opacity: 0.2;
 }
 
 a {
     color: var(--primary-color);
     text-decoration: none;
+}
+
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 20px;
+    background: var(--gradient-bg);
+    color: var(--background-color);
+    border: none;
+    border-radius: 25px;
+    font-size: 1em;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 10px 20px var(--shadow-color);
 }
 
 .contact-info {
@@ -174,11 +248,13 @@ a {
     padding: 15px;
     border-radius: 10px;
     transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.05);
 }
 
 .contact-info:hover {
-    background: var(--card-bg);
+    background: var(--gradient-bg);
     transform: translateX(10px);
+    box-shadow: 0 5px 15px var(--shadow-color);
 }
 
 .contact-info i {
@@ -198,12 +274,28 @@ a {
     cursor: pointer;
 }
 
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 @media (max-width: 768px) {
     .sidebar {
-        transform: translateX(-250px);
-        background: rgba(44, 62, 80, 0.98);
-        backdrop-filter: blur(10px);
+        transform: translateX(-250px); /* Oculta la barra de navegación inicialmente */
+        background: rgba(44, 62, 80, 0.98); /* Asegura un fondo visible */
+        backdrop-filter: blur(10px); /* Añade un efecto de desenfoque */
     }
+
+    .sidebar.active {
+        transform: translateX(0); /* Muestra la barra de navegación */
+    }
+
     .main-content {
         margin-left: 0;
     }
@@ -212,6 +304,11 @@ a {
         font-size: 2.5em;
         text-align: center;
         padding: 0 20px;
+    }
+
+    .button {
+        font-size: 0.9em;
+        padding: 8px 15px;
     }
 
     .menu-toggle {
